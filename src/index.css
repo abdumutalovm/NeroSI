@@ -1,0 +1,340 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --bg-main: #EAEFF6;
+    --card-bg: #F4F7FC;
+    --card-surface: #FFFFFF;
+    --inset-bg: #DEE6F1;
+    --text-primary: #0F172A;
+    --text-secondary: #334155;
+    --text-muted: #64748B;
+    --accent-blue: #2563EB;
+    --accent-blue-hover: #1D4ED8;
+    
+    /* Clay Shadows - Light Mode (Ultra soft, physical matte rubber/clay) */
+    --clay-shadow-outer: 12px 14px 28px rgba(166, 180, 200, 0.45), -10px -10px 24px rgba(255, 255, 255, 0.95);
+    --clay-shadow-subtle: 7px 9px 20px rgba(166, 180, 200, 0.35), -7px -7px 18px rgba(255, 255, 255, 0.95);
+    --clay-shadow-inset: inset 4px 4px 8px rgba(166, 180, 200, 0.45), inset -3px -3px 7px rgba(255, 255, 255, 0.95);
+    --clay-highlight-inner: inset 2px 2px 4px rgba(255, 255, 255, 0.95), inset -2px -2px 4px rgba(166, 180, 200, 0.15);
+  }
+
+  .dark {
+    --bg-main: #101319;
+    --card-bg: #171B24;
+    --card-surface: #1E2431;
+    --inset-bg: #12151D;
+    --text-primary: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --text-muted: #94A3B8;
+    --accent-blue: #3B82F6;
+    --accent-blue-hover: #60A5FA;
+
+    /* Clay Shadows - Dark Mode (Deep matte slate, subtle specular highlights) */
+    --clay-shadow-outer: 10px 14px 28px rgba(0, 0, 0, 0.55), -6px -6px 20px rgba(255, 255, 255, 0.035);
+    --clay-shadow-subtle: 7px 10px 20px rgba(0, 0, 0, 0.45), -5px -5px 14px rgba(255, 255, 255, 0.03);
+    --clay-shadow-inset: inset 4px 4px 9px rgba(0, 0, 0, 0.7), inset -2px -2px 6px rgba(255, 255, 255, 0.05);
+    --clay-highlight-inner: inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.08), inset -2px -2px 4px rgba(0, 0, 0, 0.4);
+  }
+}
+
+* {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.3s ease,
+              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  min-height: 100vh;
+  font-size: 15px;
+}
+
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Claymorphic Main Container */
+.clay-card {
+  background: var(--card-bg);
+  border-radius: 28px;
+  box-shadow: var(--clay-shadow-outer);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  position: relative;
+}
+
+.dark .clay-card {
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.clay-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: var(--clay-highlight-inner);
+}
+
+/* Claymorphic Surface Item */
+.clay-surface {
+  background: var(--card-surface);
+  color: var(--text-primary);
+  border-radius: 24px;
+  box-shadow: var(--clay-shadow-subtle);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  position: relative;
+}
+
+.dark .clay-surface {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.clay-surface::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: var(--clay-highlight-inner);
+}
+
+/* Sunken / Inset Clay Elements (Inputs, wells, recesses) */
+.clay-inset {
+  background: var(--inset-bg);
+  border-radius: 22px;
+  box-shadow: var(--clay-shadow-inset);
+  border: 1px solid rgba(200, 215, 230, 0.65);
+}
+
+.dark .clay-inset {
+  border: 1px solid rgba(0, 0, 0, 0.55);
+}
+
+/* Interactive Clay Button (Secondary / White/Dark) */
+.clay-btn {
+  background: var(--card-surface);
+  color: var(--text-primary);
+  border-radius: 20px;
+  box-shadow: 
+    6px 8px 18px rgba(166, 180, 200, 0.35),
+    -5px -5px 14px rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  position: relative;
+  transition: all 0.16s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.dark .clay-btn {
+  box-shadow: 
+    5px 7px 16px rgba(0, 0, 0, 0.5),
+    -4px -4px 12px rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.clay-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: var(--clay-highlight-inner);
+}
+
+.clay-btn:hover {
+  transform: translateY(-1.5px);
+}
+
+.clay-btn:active {
+  transform: translateY(2.5px);
+  box-shadow: 
+    2px 3px 6px rgba(166, 180, 200, 0.3),
+    -2px -2px 6px rgba(255, 255, 255, 0.8);
+}
+
+.dark .clay-btn:active {
+  box-shadow: 
+    2px 3px 6px rgba(0, 0, 0, 0.6),
+    -1px -1px 4px rgba(255, 255, 255, 0.02);
+}
+
+/* Primary Vibrant Blue Clay Button (Pill style from reference) */
+.clay-btn-primary {
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  color: #FFFFFF !important;
+  border-radius: 22px;
+  box-shadow: 
+    0 12px 24px -4px rgba(37, 99, 235, 0.45),
+    0 4px 10px rgba(166, 180, 200, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  transition: all 0.16s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.dark .clay-btn-primary {
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+  box-shadow: 
+    0 12px 26px -2px rgba(59, 130, 246, 0.4),
+    0 4px 10px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.clay-btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: 
+    inset 2px 2px 3.5px rgba(255, 255, 255, 0.45),
+    inset -2px -2px 5px rgba(15, 40, 120, 0.4);
+}
+
+.clay-btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 16px 30px -4px rgba(37, 99, 235, 0.55),
+    0 6px 14px rgba(166, 180, 200, 0.3);
+}
+
+.clay-btn-primary:active:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: 
+    0 4px 10px -1px rgba(37, 99, 235, 0.38),
+    0 2px 5px rgba(166, 180, 200, 0.2);
+}
+
+.clay-btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Template Card */
+.clay-template-card {
+  background: var(--card-surface);
+  color: var(--text-primary);
+  border-radius: 22px;
+  box-shadow: var(--clay-shadow-subtle);
+  border: 2px solid transparent;
+  position: relative;
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 0.28s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.clay-template-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: var(--clay-highlight-inner);
+}
+
+.clay-template-card:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow:
+    14px 18px 34px rgba(166, 180, 200, 0.5),
+    -8px -8px 24px rgba(255, 255, 255, 1),
+    0 0 0 1px rgba(37, 99, 235, 0.12);
+}
+
+.dark .clay-template-card:hover {
+  box-shadow:
+    10px 16px 28px rgba(0, 0, 0, 0.65),
+    -5px -5px 16px rgba(255, 255, 255, 0.04),
+    0 0 0 1px rgba(59, 130, 246, 0.2);
+}
+
+.clay-template-card.is-selected {
+  border-color: var(--accent-blue);
+  box-shadow:
+    8px 12px 26px rgba(37, 99, 235, 0.28),
+    -6px -6px 18px rgba(255, 255, 255, 0.95);
+  transform: translateY(-3px);
+}
+
+.dark .clay-template-card.is-selected {
+  box-shadow:
+    8px 12px 26px rgba(59, 130, 246, 0.35),
+    -4px -4px 14px rgba(255, 255, 255, 0.04);
+}
+
+/* Pill Toggle Switch / Navigation Bar Buttons */
+.clay-toggle {
+  background: var(--card-surface);
+  color: var(--text-primary);
+  border-radius: 9999px;
+  box-shadow: 
+    4px 6px 14px rgba(166, 180, 200, 0.3),
+    -4px -4px 12px rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  position: relative;
+  transition: all 0.16s ease;
+  user-select: none;
+  cursor: pointer;
+}
+
+.dark .clay-toggle {
+  box-shadow: 
+    4px 5px 12px rgba(0, 0, 0, 0.45),
+    -3px -3px 10px rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.clay-toggle::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: var(--clay-highlight-inner);
+}
+
+.clay-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.clay-toggle:active {
+  transform: translateY(2px);
+}
+
+.clay-toggle.is-active {
+  background: var(--accent-blue);
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 6px 16px -2px rgba(37, 99, 235, 0.5),
+    inset 1px 1px 3px rgba(255, 255, 255, 0.4);
+}
+
+/* Glowing Pulsing Button for Central Create */
+.clay-glow-btn {
+  background: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%);
+  color: #FFFFFF !important;
+  box-shadow: 
+    0 12px 28px -4px rgba(37, 99, 235, 0.5),
+    0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.clay-glow-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 
+    0 16px 36px -4px rgba(37, 99, 235, 0.65),
+    0 6px 16px rgba(79, 70, 229, 0.4);
+}
+
+.clay-glow-btn:active {
+  transform: translateY(2px) scale(0.98);
+}
